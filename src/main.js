@@ -7,6 +7,7 @@ import App from './components/App.vue'
 import routes from './routes'
 import store from './store'
 import 'vuetify/dist/vuetify.min.css'
+import './assets/iconfont/material-icons.css'
 
 const SocketInstance = socketio('http://localhost:8000')
 Vue.use(Vuetify)
