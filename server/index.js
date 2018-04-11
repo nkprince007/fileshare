@@ -7,8 +7,12 @@ const webpackHotMiddleware = require('webpack-hot-middleware')
 const config = require('./../webpack.config')
 const routes = require('./routes')
 const db = require('./database')
+const path = require('path')
 
 const app = express()
+if (process.env.NODE_ENV === 'production') {
+  app.use('/dist', express.static(path.join(__dirname, '..', 'dist')))
+}
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 // const ios = require('socket.io-express-session')
@@ -40,8 +44,12 @@ io.use((socket, next) => {
 
 app.use(mSession)
 app.use(routes)
-app.use(webpackDevMiddleware(compiler, {publicPath: config.output.publicPath}))
-app.use(webpackHotMiddleware(compiler))
+if (process.env.NODE_ENV === 'development') {
+  app.use(webpackDevMiddleware(compiler, {
+    publicPath: config.output.publicPath
+  }))
+  app.use(webpackHotMiddleware(compiler))
+}
 
 io.on('connection', client => {
   const { email } = client.request.session
