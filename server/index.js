@@ -2,6 +2,7 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const session = require('express-session')
 const webpack = require('webpack')
+const open = require('open')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const config = require('./../webpack.config')
@@ -75,4 +76,8 @@ io.on('connection', client => {
 })
 
 app.get('*', (req, res) => res.redirect(`/?next=${req.path}`))
-http.listen(app.get('port'), app.get('host'))
+http.listen(app.get('port'), app.get('host'), () => {
+  const url = `http://${app.get('host')}:${app.get('port')}/`
+  console.log(`Server started at ${url}`)
+  open(url)
+})
