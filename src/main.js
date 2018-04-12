@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueSocketio from 'vue-socket.io'
+import VueChatScroll from 'vue-chat-scroll'
 import socketio from 'socket.io-client'
 import Vuetify from 'vuetify'
 import App from './components/App.vue'
@@ -11,6 +12,7 @@ import './assets/iconfont/material-icons.css'
 
 const SocketInstance = socketio('http://localhost:8000')
 Vue.use(Vuetify)
+Vue.use(VueChatScroll)
 Vue.use(VueRouter)
 Vue.use(VueSocketio, SocketInstance, store)
 const router = new VueRouter({ routes })
